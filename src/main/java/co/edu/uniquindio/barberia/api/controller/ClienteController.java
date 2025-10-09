@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/clientes") // <-- base path correcto
 public class ClienteController {
@@ -21,8 +23,16 @@ public class ClienteController {
     public ResponseEntity<Cliente> crear(@Valid @RequestBody CrearClienteDTO dto) {
         return ResponseEntity.ok(service.crear(dto));
     }
+
+    // ✅ Nuevo método GET para listar todos los clientes
+    @GetMapping
+    public ResponseEntity<List<Cliente>> listar() {
+        return ResponseEntity.ok(service.listar());
+    }
+
     // (opcional) para probar rápido en el navegador:
     @GetMapping("/ping")
-    public String ping() { return "clientes-ok"; }
+    public String ping() {
+        return "clientes-ok";
+    }
 }
-

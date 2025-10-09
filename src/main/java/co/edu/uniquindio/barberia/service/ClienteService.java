@@ -1,11 +1,12 @@
 package co.edu.uniquindio.barberia.service;
 
-
 import co.edu.uniquindio.barberia.api.dto.CrearClienteDTO;
 import co.edu.uniquindio.barberia.domain.Cliente;
 import co.edu.uniquindio.barberia.repo.ClienteRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -27,5 +28,11 @@ public class ClienteService {
                 .telefono(dto.telefono())
                 .build();
         return repo.save(c);
+    }
+
+    // ✅ Nuevo método para listar todos los clientes
+    @Transactional(readOnly = true)
+    public List<Cliente> listar() {
+        return repo.findAll();
     }
 }

@@ -7,20 +7,31 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/citas")
 public class CitaController {
     private final CitaService service;
-    public CitaController(CitaService s){ this.service = s; }
+
+    public CitaController(CitaService s) {
+        this.service = s;
+    }
 
     @PostMapping
-    public ResponseEntity<Cita> crear(@Valid @RequestBody CrearCitaDTO dto){
+    public ResponseEntity<Cita> crear(@Valid @RequestBody CrearCitaDTO dto) {
         return ResponseEntity.ok(service.agendar(dto));
+    }
+
+    // ✅ Nuevo método GET para listar todas las citas
+    @GetMapping
+    public ResponseEntity<List<Cita>> listar() {
+        return ResponseEntity.ok(service.listar());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelar(@PathVariable Long id,
-                                         @RequestParam(defaultValue = "N/A") String motivo){
+                                         @RequestParam(defaultValue = "N/A") String motivo) {
         service.cancelar(id, motivo);
         return ResponseEntity.noContent().build();
     }
